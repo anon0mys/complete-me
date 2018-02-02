@@ -2,7 +2,6 @@ require_relative 'test_helper'
 require './lib/node'
 
 class NodeTest < Minitest::Test
-
   def test_node_exists
     node = Node.new('a')
 
