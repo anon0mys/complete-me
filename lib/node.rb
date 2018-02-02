@@ -1,4 +1,3 @@
-
 # This is a node.
 class Node
   def initialize(letter, word = false)
