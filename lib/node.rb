@@ -1,6 +1,6 @@
 class Node
-
-  def initialize
+  def initialize(data)
+    @data = data
   end
-  
+
 end
