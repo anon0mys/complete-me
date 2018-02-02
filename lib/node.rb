@@ -1,3 +1,4 @@
+
 # This is a node.
 class Node
   def initialize(letter, word = false)
@@ -6,7 +7,7 @@ class Node
   end
 
   def inspect
-    "#{@letter}"
+    @letter.to_s
   end
 
   def word?

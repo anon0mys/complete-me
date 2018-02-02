@@ -1,13 +1,17 @@
+<<<<<<< HEAD
 require_relative 'test_helper'
+=======
+require_relative 'test_helper.rb'
+>>>>>>> master
 require './lib/node'
 
 class NodeTest < Minitest::Test
-
   def test_node_exists
     node = Node.new('a')
 
     assert_instance_of Node, node
   end
+<<<<<<< HEAD
 
   def test_node_word_method
     node = Node.new('s')
@@ -24,4 +28,6 @@ class NodeTest < Minitest::Test
 
     assert_equal 'x', node.inspect
   end
+=======
+>>>>>>> master
 end
