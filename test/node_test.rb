@@ -1,4 +1,5 @@
 require_relative 'test_helper.rb'
+require './lib/node'
 
 class NodeTest < Minitest::Test
 
