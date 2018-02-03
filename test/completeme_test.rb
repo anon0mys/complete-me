@@ -68,4 +68,17 @@ class CompleteMeTest < MiniTest::Test
     copmletion.insert('pizzle')
 
     assert_equal 2, completion.count
+
+  def test_can_find_nodes
+    completion = CompleteMe.new
+    completion.insert('pizza')
+    completion.insert('parlor')
+
+    assert_equal 'p', completion.find_node('p').letter
+    assert_equal 'z', completion.find_node('pizz').letter
+    assert_equal 'o', completion.find_node('parlo').letter
+    assert_equal 'r', completion.find_node('parlor').letter
+    assert_equal 'Node does not exist.', completion.find_node('x')
+  end
+
 end
