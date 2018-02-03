@@ -66,5 +66,4 @@ class CompleteMeTest < MiniTest::Test
                      .children['e']
                      .word?
   end
-  
 end
