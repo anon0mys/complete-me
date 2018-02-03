@@ -4,7 +4,7 @@ class Node
   attr_accessor :children
   def initialize(letter, word = false)
     @letter = letter
-    @children = Hash.new
+    @children = {}
     @word = word
   end
 

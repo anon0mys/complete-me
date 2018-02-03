@@ -15,30 +15,30 @@ class CompleteMeTest < MiniTest::Test
 
   def test_completion_can_insert_node_on_head
     completion = CompleteMe.new
-    completion.insert("p")
+    completion.insert('p')
 
-    assert_instance_of Node, completion.head.children["p"]
+    assert_instance_of Node, completion.head.children['p']
   end
 
   def test_can_insert_letter
     completion = CompleteMe.new
-    completion.insert("p")
+    completion.insert('p')
 
-    assert completion.head.children.keys.include?("p")
-    assert_equal "p", completion.head.children["p"].letter
+    assert completion.head.children.keys.include?('p')
+    assert_equal 'p', completion.head.children['p'].letter
   end
 
   def test_can_insert_word
     completion = CompleteMe.new
-    completion.insert("pizza")
+    completion.insert('pizza')
 
-    assert completion.head.children.keys.include?("p")
-    assert completion.head.children["p"]
-                          .children.keys.include?("i")
-    assert completion.head.children["p"]
-                          .children["i"]
-                          .children["z"]
-                          .children["z"]
-                          .children.keys.include?("a")
+    assert completion.head.children.keys.include?('p')
+    assert completion.head.children['p']
+                          .children.keys.include?('i')
+    assert completion.head.children['p']
+                          .children['i']
+                          .children['z']
+                          .children['z']
+                          .children.keys.include?('a')
   end
 end
