@@ -9,16 +9,9 @@ class CompleteMe
 
   def insert(word, node = @head)
     letter_array = word.chars
-    insert_helper(letter_array.first, node)
+    letter = letter_array.first
+    node.children[letter] = Node.new(letter) unless node.children[letter]
     return nil unless letter_array.length.positive?
     insert(letter_array[1..-1].join, node.children[letter_array.first])
-  end
-
-  def insert_helper(letter, node)
-    if node.children[letter]
-      insert_helper(letter, node.children[letter])
-    else
-      node.children[letter] = Node.new(letter)
-    end
   end
 end

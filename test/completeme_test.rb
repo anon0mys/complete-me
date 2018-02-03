@@ -41,4 +41,19 @@ class CompleteMeTest < MiniTest::Test
                           .children['z']
                           .children.keys.include?('a')
   end
+
+  def test_can_insert_a_different_word
+    completion = CompleteMe.new
+    completion.insert('pizza')
+    completion.insert('pize')
+    expected_head_children = ['p']
+    expected_children_depth_3 = ['z', 'e']
+
+    assert_equal expected_head_children, completion.head.children.keys
+    assert_equal expected_children_depth_3, completion.head
+                                                      .children['p']
+                                                      .children['i']
+                                                      .children['z']
+                                                      .children.keys
+  end
 end
