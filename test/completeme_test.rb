@@ -54,4 +54,18 @@ class CompleteMeTest < MiniTest::Test
                                     .children['z']
                                     .children.keys
   end
+
+  def test_can_count_one_word
+    completion = CompletMe.new
+    completion.insert('pizza')
+
+    assert_equal 1, completion.count
+  end
+
+  def test_can_count_multiple_words
+    completion = CompleteMe.new
+    completion.insert('pizza')
+    copmletion.insert('pizzle')
+
+    assert_equal 2, completion.count
 end
