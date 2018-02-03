@@ -54,4 +54,16 @@ class CompleteMeTest < MiniTest::Test
                                     .children['z']
                                     .children.keys
   end
+
+  def test_last_letter_has_word_flag
+    completion = CompleteMe.new
+    completion.insert('pize')
+
+    assert completion.head
+                     .children['p']
+                     .children['i']
+                     .children['z']
+                     .children['e']
+                     .word?
+  end
 end
