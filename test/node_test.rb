@@ -23,4 +23,9 @@ class NodeTest < Minitest::Test
 
     assert_equal 'x', node.inspect
   end
+
+  def test_node_can_take_children
+    node = Node.new('a')
+    node.children['b'] = Node.new('b')
+  end
 end
