@@ -55,6 +55,20 @@ class CompleteMeTest < MiniTest::Test
                                     .children.keys
   end
 
+  def test_can_count_one_word
+    completion = CompletMe.new
+    completion.insert('pizza')
+
+    assert_equal 1, completion.count
+  end
+
+  def test_can_count_multiple_words
+    completion = CompleteMe.new
+    completion.insert('pizza')
+    copmletion.insert('pizzle')
+
+    assert_equal 2, completion.count
+
   def test_can_find_nodes
     completion = CompleteMe.new
     completion.insert('pizza')
@@ -66,4 +80,5 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'r', completion.find_node('parlor').letter
     assert_equal 'Node does not exist.', completion.find_node('x')
   end
+
 end
