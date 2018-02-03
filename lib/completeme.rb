@@ -16,18 +16,16 @@ class CompleteMe
   end
 
   def find_node(word)
-    ptr = self.head
-  
+    ptr = head
     word.chars.each do |char|
       ptr = ptr.children[char]
     end
   
-    unless ptr.nil?
-      ptr
+    if ptr.nil?
+      'Node does not exist.'
     else
-      "Node does not exist."
+      ptr
     end
   end
-
 
 end
