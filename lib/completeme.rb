@@ -20,7 +20,7 @@ class CompleteMe
     word.chars.each do |char|
       ptr = ptr.children[char]
     end
-  
+
     if ptr.nil?
       'Node does not exist.'
     else
@@ -28,4 +28,16 @@ class CompleteMe
     end
   end
 
+  def count(starting_point = @head, total_words = 0)
+    total_words += 1 if starting_point.word?
+    binding.pry
+    if !starting_point.children.empty?
+      count(starting_point.children.values[0], total_words)
+    end
+    total_words
+  end
 end
+
+completion = CompleteMe.new
+completion.insert('pizza')
+binding.pry

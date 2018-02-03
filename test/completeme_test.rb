@@ -63,11 +63,13 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_can_count_multiple_words
+    skip
     completion = CompleteMe.new
     completion.insert('pizza')
-    copmletion.insert('pizzle')
+    completion.insert('pizzle')
 
     assert_equal 2, completion.count
+  end
 
   def test_can_find_nodes
     completion = CompleteMe.new
