@@ -12,10 +12,10 @@ class CompleteMe
     letter = letter_array.first
     unless node.children[letter]
       node.children[letter] = if letter_array.length == 1
-        Node.new(letter, true)
-      else
-        Node.new(letter)
-      end
+                                Node.new(letter, true)
+                              else
+                                Node.new(letter)
+                              end
     end
     return nil unless letter_array.length.positive?
     insert(letter_array[1..-1].join, node.children[letter_array.first])
