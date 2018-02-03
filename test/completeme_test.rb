@@ -47,10 +47,10 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('pizza')
     completion.insert('pize')
     expected_head_children = ['p']
-    expected_children_depth_3 = ['z', 'e']
+    expected_children_depth_three = ['z', 'e']
 
     assert_equal expected_head_children, completion.head.children.keys
-    assert_equal expected_children_depth_3, completion.head
+    assert_equal expected_children_depth_three, completion.head
                                                       .children['p']
                                                       .children['i']
                                                       .children['z']
