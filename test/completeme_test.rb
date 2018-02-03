@@ -55,7 +55,7 @@ class CompleteMeTest < MiniTest::Test
                                     .children.keys
   end
 
-  def tets_can_find_nodes
+  def test_can_find_nodes
     completion = CompleteMe.new
     completion.insert('pizza')
     completion.insert('parlor')
@@ -63,7 +63,7 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'p', completion.find_node('p').letter
     assert_equal 'z', completion.find_node('pizz').letter
     assert_equal 'o', completion.find_node('parlo').letter
-    assert_equal 'r', completeion.find_node('parlor').letter
+    assert_equal 'r', completion.find_node('parlor').letter
     assert_equal 'Node does not exist.', completion.find_node('x')
   end
 end
