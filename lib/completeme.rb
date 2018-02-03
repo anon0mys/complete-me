@@ -34,4 +34,10 @@ class CompleteMe
     end
   end
 
+  def populate(dictionary)
+    dictionary = dictionary.split("\n")
+    dictionary.each do |word|
+      insert(word.strip)
+    end
+  end
 end
