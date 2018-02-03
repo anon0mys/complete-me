@@ -14,7 +14,7 @@ class CompleteMe
       node.children[letter] = if letter_array.length == 1
         Node.new(letter, true)
       else
-         Node.new(letter)
+        Node.new(letter)
       end
     end
     return nil unless letter_array.length.positive?
@@ -26,7 +26,7 @@ class CompleteMe
     word.chars.each do |char|
       ptr = ptr.children[char]
     end
-  
+
     if ptr.nil?
       'Node does not exist.'
     else

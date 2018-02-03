@@ -66,7 +66,7 @@ class CompleteMeTest < MiniTest::Test
                      .children['e']
                      .word?
   end
-  
+
   def test_can_find_nodes
     completion = CompleteMe.new
     completion.insert('pizza')
