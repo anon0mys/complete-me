@@ -14,4 +14,20 @@ class CompleteMe
     return nil unless letter_array.length.positive?
     insert(letter_array[1..-1].join, node.children[letter_array.first])
   end
+
+  def find_node(word)
+    ptr = self.head
+  
+    word.chars.each do |char|
+      ptr = ptr.children[char]
+    end
+  
+    unless ptr.nil?
+      ptr
+    else
+      "Node does not exist."
+    end
+  end
+
+
 end
