@@ -55,7 +55,20 @@ class CompleteMeTest < MiniTest::Test
                                     .children.keys
   end
 
+  def test_last_letter_has_word_flag
+    completion = CompleteMe.new
+    completion.insert('pize')
+
+    assert completion.head
+                     .children['p']
+                     .children['i']
+                     .children['z']
+                     .children['e']
+                     .word?
+  end
+
   def test_can_count_one_word
+    skip
     completion = CompletMe.new
     completion.insert('pizza')
 
@@ -83,4 +96,27 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'Node does not exist.', completion.find_node('x')
   end
 
+  def test_populate_method
+    completion = CompleteMe.new
+    dictionary = File.read('/usr/share/dict/words')
+    completion.populate(dictionary)
+
+    assert_equal 'y', completion.find_node('party').letter
+    assert completion.find_node('party').word?
+    assert_equal 'o', completion.find_node('abstractio').letter
+    refute completion.find_node('abstractio').word?
+  end
+
+  def test_suggest_method
+    completion = CompleteMe.new
+    completion.insert('the')
+    completion.insert('there')
+    completion.insert('territory')
+    completion.insert('barnacle')
+
+    assert_equal %w[the there territory], completion.suggest('t')
+    assert_equal %w[the there], completion.suggest('th')
+    assert_equal %w[barnacle], completion.suggest('barn')
+    assert_equal [], completion.suggest('taxes')
+  end
 end
