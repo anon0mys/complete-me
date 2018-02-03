@@ -10,8 +10,7 @@ class CompleteMe
   def insert(word, node = @head)
     letter_array = word.chars
     insert_helper(letter_array.first, node)
-    if letter_array.length > 0
-      binding.pry
+    if letter_array.length.positive?
       insert(letter_array[1..-1].join, node.children[letter_array.first])
     end
   end
