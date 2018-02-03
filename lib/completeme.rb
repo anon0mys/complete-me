@@ -40,5 +40,4 @@ class CompleteMe
       insert(word.strip)
     end
   end
-
 end
