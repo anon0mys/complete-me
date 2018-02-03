@@ -55,6 +55,18 @@ class CompleteMeTest < MiniTest::Test
                                     .children.keys
   end
 
+  def test_last_letter_has_word_flag
+    completion = CompleteMe.new
+    completion.insert('pize')
+
+    assert completion.head
+                     .children['p']
+                     .children['i']
+                     .children['z']
+                     .children['e']
+                     .word?
+  end
+
   def test_can_count_one_word
     completion = CompletMe.new
     completion.insert('pizza')
@@ -68,6 +80,7 @@ class CompleteMeTest < MiniTest::Test
     copmletion.insert('pizzle')
 
     assert_equal 2, completion.count
+  end
 
   def test_can_find_nodes
     completion = CompleteMe.new
@@ -80,5 +93,4 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'r', completion.find_node('parlor').letter
     assert_equal 'Node does not exist.', completion.find_node('x')
   end
-
 end
