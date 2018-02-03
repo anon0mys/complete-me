@@ -114,9 +114,9 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('territory')
     completion.insert('barnacle')
 
-    assert_equal ['the', 'there', 'territory'], completion.suggest('t')
-    assert_equal ['the', 'there'], completion.suggest('th')
-    assert_equal ['barnacle'], completion.suggest('barn')
+    assert_equal %w(the there territory), completion.suggest('t')
+    assert_equal %w(the there), completion.suggest('th')
+    assert_equal %w(barnacle), completion.suggest('barn')
     assert_equal [], completion.suggest('taxes')
   end
 end
