@@ -34,11 +34,12 @@ class CompleteMeTest < MiniTest::Test
 
     assert completion.head.children.keys.include?('p')
     assert completion.head.children['p'].children.keys.include?('i')
-    assert completion.head.children['p']
-                          .children['i']
-                          .children['z']
-                          .children['z']
-                          .children.keys.include?('a')
+    assert completion.head
+                     .children['p']
+                     .children['i']
+                     .children['z']
+                     .children['z']
+                     .children.keys.include?('a')
   end
 
   def test_can_insert_a_different_word
@@ -46,11 +47,11 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('pizza')
     completion.insert('pize')
 
-    assert_equal %w(p), completion.head.children.keys
-    assert_equal %w(z e), completion.head
-                                       .children['p']
-                                       .children['i']
-                                       .children['z']
-                                       .children.keys
+    assert_equal %w[p], completion.head.children.keys
+    assert_equal %w[z e], completion.head
+                                    .children['p']
+                                    .children['i']
+                                    .children['z']
+                                    .children.keys
   end
 end
