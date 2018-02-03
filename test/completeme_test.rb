@@ -33,8 +33,7 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('pizza')
 
     assert completion.head.children.keys.include?('p')
-    assert completion.head.children['p']
-                          .children.keys.include?('i')
+    assert completion.head.children['p'].children.keys.include?('i')
     assert completion.head.children['p']
                           .children['i']
                           .children['z']
@@ -46,14 +45,12 @@ class CompleteMeTest < MiniTest::Test
     completion = CompleteMe.new
     completion.insert('pizza')
     completion.insert('pize')
-    expected_head_children = ['p']
-    expected_children_depth_three = ['z', 'e']
 
-    assert_equal expected_head_children, completion.head.children.keys
-    assert_equal expected_children_depth_three, completion.head
-                                                      .children['p']
-                                                      .children['i']
-                                                      .children['z']
-                                                      .children.keys
+    assert_equal %w(p), completion.head.children.keys
+    assert_equal %w(z e), completion.head
+                                       .children['p']
+                                       .children['i']
+                                       .children['z']
+                                       .children.keys
   end
 end
