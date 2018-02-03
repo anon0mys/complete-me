@@ -96,7 +96,7 @@ class CompleteMeTest < MiniTest::Test
 
   def test_populate_method
     completion = CompleteMe.new
-    dictionary = File.read("/usr/share/dict/words")
+    dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
 
     assert_equal 'y', completion.find_node('party')
