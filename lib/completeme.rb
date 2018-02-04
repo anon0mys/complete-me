@@ -8,17 +8,21 @@ class CompleteMe
   end
 
   def insert(word, node = @head)
-    letter_array = word.chars
-    letter = letter_array.first
+    length = word.chars.length
+    letter = word.chars.first
     unless node.children[letter]
-      node.children[letter] = if letter_array.length == 1
-                                Node.new(letter, true)
-                              else
-                                Node.new(letter)
-                              end
+      node.children[letter] = create_node(letter, length)
     end
-    return nil unless letter_array.length.positive?
-    insert(letter_array[1..-1].join, node.children[letter_array.first])
+    return nil if length == 1
+    insert(word[1..-1], node.children[letter])
+  end
+
+  def create_node(letter, length)
+    if length == 1
+      Node.new(letter, true)
+    else
+      Node.new(letter)
+    end
   end
 
   def find_node(word)
@@ -39,5 +43,14 @@ class CompleteMe
     dictionary.each do |word|
       insert(word.strip)
     end
+  end
+
+  def suggest(word, suggestion_array = [])
+    node = find_node(word)
+    suggestion_array.push word if node.word?
+    node.children.each_key do |letter|
+      suggest(word + letter, suggestion_array)
+    end
+    suggestion_array.uniq
   end
 end
