@@ -110,12 +110,12 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('tragedy')
     completion.insert('tragicly')
     completion.insert('travesty')
-
     assert_equal %w[tragic tragedy tragicly travesty], completion.suggest('tra')
+    completion.select('tra', 'travesty')
+    completion.select('trag', 'tragicly')
 
-    completion.select('tra', 'travesty'); completion.select('trag', 'tragicly')
-
-    assert_equal %w[travesty tragic tragedy tragicly], completion.suggest('tra')
+    assert_equal %w[travesty tragic
+                    tragedy tragicly], completion.suggest('tra')
     assert_equal %w[tragicly tragic
                     tragedy travesty], completion.suggest('trag')
   end
