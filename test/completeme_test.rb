@@ -61,7 +61,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_can_count_multiple_words
-    skip
     completion = CompleteMe.new
     completion.insert('pizza')
     completion.insert('pizzle')
@@ -70,7 +69,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_can_find_nodes
-    # skip
     completion = CompleteMe.new
     completion.insert('pizza')
     completion.insert('parlor')
@@ -83,7 +81,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    # skip
+    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
