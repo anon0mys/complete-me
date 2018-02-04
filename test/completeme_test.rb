@@ -34,12 +34,7 @@ class CompleteMeTest < MiniTest::Test
 
     assert completion.head.children.keys.include?('p')
     assert completion.head.children['p'].children.keys.include?('i')
-    assert completion.head
-                     .children['p']
-                     .children['i']
-                     .children['z']
-                     .children['z']
-                     .children.keys.include?('a')
+    assert completion.find_node('pizz').children.keys.include?('a')
   end
 
   def test_can_insert_a_different_word
@@ -48,26 +43,21 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('pize')
 
     assert_equal %w[p], completion.head.children.keys
-    assert_equal %w[z e], completion.head
-                                    .children['p']
-                                    .children['i']
-                                    .children['z']
-                                    .children.keys
+    assert_equal %w[z e], completion.find_node('piz').children.keys
   end
 
   def test_last_letter_has_word_flag
     completion = CompleteMe.new
     completion.insert('pize')
 
-    assert completion.head
-                     .children['p']
-                     .children['i']
-                     .children['z']
-                     .children['e']
-                     .word?
+    assert completion.find_node('pize').word?
   end
 
   def test_can_count_one_word
+<<<<<<< HEAD
+=======
+    skip
+>>>>>>> master
     completion = CompleteMe.new
     completion.insert('pizza')
 
@@ -84,6 +74,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_can_find_nodes
+    # skip
     completion = CompleteMe.new
     completion.insert('pizza')
     completion.insert('parlor')
@@ -96,7 +87,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    skip
+    # skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
