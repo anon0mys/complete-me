@@ -97,6 +97,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
+    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -108,6 +109,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_suggest_method
+    # skip
     completion = CompleteMe.new
     completion.insert('the')
     completion.insert('there')
