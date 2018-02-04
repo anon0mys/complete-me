@@ -34,16 +34,11 @@ class CompleteMe
     end
   end
 
-  def count(starting_point = @head, total_words = 0)
-    total_words += 1 if starting_point.word?
-    binding.pry
-    if !starting_point.children.empty?
+  def count(starting_point = @head, total_words = [])
+    total_words.push(1) if starting_point.word?
+    unless starting_point.children.keys[0].nil?
       count(starting_point.children.values[0], total_words)
     end
-    total_words
+    total_words.count
   end
 end
-
-completion = CompleteMe.new
-completion.insert('pizza')
-binding.pry
