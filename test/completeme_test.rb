@@ -54,10 +54,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_can_count_one_word
-<<<<<<< HEAD
-=======
-    skip
->>>>>>> master
     completion = CompleteMe.new
     completion.insert('pizza')
 
