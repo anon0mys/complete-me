@@ -1,7 +1,7 @@
 # This is a node.
 class Node
   attr_reader :letter
-  attr_accessor :children
+  attr_accessor :children, :word
   def initialize(letter, word = false)
     @letter = letter
     @children = {}
