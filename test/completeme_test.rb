@@ -103,4 +103,20 @@ class CompleteMeTest < MiniTest::Test
     assert_equal %w[barnacle], completion.suggest('barn')
     assert_equal [], completion.suggest('taxes')
   end
+
+  def test_select_method
+    completion = CompleteMe.new
+    completion.insert('tragic')
+    completion.insert('tragedy')
+    completion.insert('tragicly')
+    completion.insert('travesty')
+
+    assert_equal %w[tragic tragedy tragicly travesty], completion.suggest('tra')
+
+    completion.select('tra', 'travesty')
+    completion.select('trag', 'tragicly')
+
+    assert_equal %w[travesty tragic tragedy tragicly], completion.suggest('tra')
+    assert_equal %w[tragicly tragic tragedy travesty]
+  end
 end
