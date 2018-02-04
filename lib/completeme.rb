@@ -38,11 +38,14 @@ class CompleteMe
     end
   end
 
-  def populate(dictionary)
-    dictionary = dictionary.split("\n")
-    dictionary.each do |word|
-      insert(word.strip)
+  def count(starting_point = @head, total_words = [])
+    total_words.push(1) if starting_point.word?
+    unless starting_point.children.keys[0].nil?
+      starting_point.children.each_value do |child|
+        count(child, total_words)
+      end
     end
+    total_words.count
   end
 
   def suggest(word, suggestion_array = [])
