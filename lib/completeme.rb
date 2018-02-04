@@ -47,14 +47,14 @@ class CompleteMe
 
   def suggest(word, suggestion_array = [])
     node = find_node(word)
-    unless node == 'Node does not exist.'
+    if node == 'Node does not exist.'
+      []
+    else
       suggestion_array.push word if node.word?
       node.children.each_key do |letter|
         suggest(word + letter, suggestion_array)
       end
       suggestion_array.uniq
-    else
-      []
     end
   end
 end
