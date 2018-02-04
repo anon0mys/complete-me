@@ -116,4 +116,19 @@ class CompleteMeTest < MiniTest::Test
     assert_equal %w[travesty tragic tragicly], completion.suggest('tra')
     assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
   end
+
+  def test_deletion
+    completion = CompleteMe.new
+    %w[pie pizza pizzeria pick pickle].each do |word|
+      completion.insert(word)
+    end
+
+    assert_equal 5, completion.count
+    assert completion.find_node('pick').word?
+
+    completion.delete('pick')
+
+    assert_equal 4, completion.count
+    refute completion.find_node('pick').word?
+  end
 end
