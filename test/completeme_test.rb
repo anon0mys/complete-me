@@ -107,16 +107,13 @@ class CompleteMeTest < MiniTest::Test
   def test_select_method
     completion = CompleteMe.new
     completion.insert('tragic')
-    completion.insert('tragedy')
     completion.insert('tragicly')
     completion.insert('travesty')
-    assert_equal %w[tragic tragedy tragicly travesty], completion.suggest('tra')
+
     completion.select('tra', 'travesty')
     completion.select('trag', 'tragicly')
 
-    assert_equal %w[travesty tragic
-                    tragedy tragicly], completion.suggest('tra')
-    assert_equal %w[tragicly tragic
-                    tragedy travesty], completion.suggest('trag')
+    assert_equal %w[travesty tragic tragicly], completion.suggest('tra')
+    assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
   end
 end
