@@ -132,4 +132,17 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 4, completion.count
     refute completion.find_node('pick').word?
   end
+
+  def test_pruning_of_tree_after_deletion
+    completion = CompleteMe.new
+    %w[pie pizza pizzeria pick pickle].each do |word|
+      completion.insert(word)
+    end
+    completion.delete('pickle')
+
+    assert_equal 'Node does not exist.', completion.find_node('pickle')
+    assert_equal 'Node does not exist.', completion.find_node('pickl')
+    assert_equal 'k', completion.find_node('pick').letter
+    assert completion.find_node('pick').word?
+  end
 end
