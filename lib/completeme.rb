@@ -38,6 +38,13 @@ class CompleteMe
     end
   end
 
+  def populate(dictionary)
+    dictionary = dictionary.split("\n")
+    dictionary.each do |word|
+      insert(word.strip)
+    end
+  end
+
   def count(starting_point = @head, total_words = [])
     total_words.push(1) if starting_point.word?
     unless starting_point.children.keys[0].nil?
