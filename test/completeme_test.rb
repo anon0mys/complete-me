@@ -104,6 +104,19 @@ class CompleteMeTest < MiniTest::Test
     assert_equal [], completion.suggest('taxes')
   end
 
+  def test_select_method
+    completion = CompleteMe.new
+    completion.insert('tragic')
+    completion.insert('tragicly')
+    completion.insert('travesty')
+
+    completion.select('tra', 'travesty')
+    completion.select('trag', 'tragicly')
+
+    assert_equal %w[travesty tragic tragicly], completion.suggest('tra')
+    assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
+  end
+
   def test_deletion
     completion = CompleteMe.new
     %w[pie pizza pizzeria pick pickle].each do |word|
