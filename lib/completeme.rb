@@ -28,7 +28,7 @@ class CompleteMe
   def find_node(word)
     ptr = head
     word.chars.each do |char|
-      ptr = ptr.children[char]
+      ptr = ptr.children[char] unless ptr.nil?
     end
 
     if ptr.nil?
@@ -47,10 +47,14 @@ class CompleteMe
 
   def suggest(word, suggestion_array = [])
     node = find_node(word)
-    suggestion_array.push word if node.word?
-    node.children.each_key do |letter|
-      suggest(word + letter, suggestion_array)
+    unless node == 'Node does not exist.'
+      suggestion_array.push word if node.word?
+      node.children.each_key do |letter|
+        suggest(word + letter, suggestion_array)
+      end
+      suggestion_array.uniq
+    else
+      []
     end
-    suggestion_array.uniq
   end
 end
