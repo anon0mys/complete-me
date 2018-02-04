@@ -105,6 +105,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_select_method
+    skip
     completion = CompleteMe.new
     completion.insert('tragic')
     completion.insert('tragicly')
@@ -117,7 +118,7 @@ class CompleteMeTest < MiniTest::Test
     assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
   end
 
-  def test_deletion
+  def test_removal_of_word_flag
     completion = CompleteMe.new
     %w[pie pizza pizzeria pick pickle].each do |word|
       completion.insert(word)
