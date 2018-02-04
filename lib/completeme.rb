@@ -67,4 +67,9 @@ class CompleteMe
       suggestion_array.uniq
     end
   end
+
+  def delete(word)
+    node = find_node(word)
+    node.word = false unless node.class == String
+  end
 end
