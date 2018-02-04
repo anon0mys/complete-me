@@ -49,8 +49,7 @@ class CompleteMe
     node = find_node(word)
     suggestion_array.push word if node.word?
     node.children.each_key do |letter|
-      word += letter
-      suggest(word, suggestion_array)
+      suggest(word + letter, suggestion_array)
     end
     suggestion_array.uniq
   end
