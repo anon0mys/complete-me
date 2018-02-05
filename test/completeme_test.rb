@@ -105,17 +105,17 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_select_method
-    skip
     completion = CompleteMe.new
-    completion.insert('tragic')
-    completion.insert('tragicly')
-    completion.insert('travesty')
+    %w[pize pizza pizzeria pizzicato].each do |word|
+      completion.insert(word)
+    end
 
-    completion.select('tra', 'travesty')
-    completion.select('trag', 'tragicly')
+    3.times{ completion.select('piz', 'pizzeria') }
+    2.times{ completion.select('pi', 'pizza') }
+    completion.select('pi', "pizzicato")
 
-    assert_equal %w[travesty tragic tragicly], completion.suggest('tra')
-    assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
+    assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
+    assert_equal %w[pizza pizzicato pize pizzeria], completion.suggest('pi')
   end
 
   def test_removal_of_word_flag

@@ -55,16 +55,36 @@ class CompleteMe
     total_words.count
   end
 
-  def suggest(word, suggestion_array = [])
+  def suggest(word, prefix = word, suggestion_array = [])
     node = find_node(word)
     if node == 'Node does not exist.'
       []
     else
       suggestion_array.push word if node.word?
       node.children.each_key do |letter|
-        suggest(word + letter, suggestion_array)
+        suggest(word + letter, prefix, suggestion_array)
       end
-      suggestion_array.uniq
+      suggestion_sorter(suggestion_array.uniq, prefix)
+    end
+  end
+
+  def suggestion_sorter(suggestion, prefix)
+    weights = suggestion.map do |item|
+      find_node(item).weight_holder[prefix] || 0
+    end
+
+    sorted = suggestion.zip(weights).to_h
+    sorted = sorted.sort_by { |_k, v| -v }.flatten!
+    sorted.select { |item| item.is_a?(String) }
+  end
+
+  def select(prefix, desired)
+    return 'Invalid combination.' if find_node(desired).is_a?(String)
+    word = find_node(desired)
+    if word.weight_holder[prefix].nil?
+      word.weight_holder[prefix] = 1
+    else
+      word.weight_holder[prefix] += 1
     end
   end
 
