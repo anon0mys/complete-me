@@ -7,18 +7,22 @@ class CompleteMe
     @head = Node.new(nil)
   end
 
-  def insert(word, node = @head)
+  def insert(word)
     if find_node(word) == 'Node does not exist.'
-      length = word.chars.length
-      letter = word.chars.first
-      unless node.children[letter]
-        node.children[letter] = create_node(letter, length)
-      end
-      return nil if length == 1
-      insert(word[1..-1], node.children[letter])
+      build_branch(word)
     else
       find_node(word).word = true
     end
+  end
+
+  def build_branch(word, node = @head)
+    length = word.chars.length
+    letter = word.chars.first
+    unless node.children[letter]
+      node.children[letter] = create_node(letter, length)
+    end
+    return if length == 1
+    build_branch(word[1..-1], node.children[letter])
   end
 
   def create_node(letter, length)
