@@ -98,14 +98,15 @@ class CompleteMe
       node
     else
       node.word = false
-      prune(node, word)
+      prune(word, node)
     end
   end
 
-  def prune(node, word)
+  def prune(word, node)
     parent_node = find_node(word[0..-2])
-    return unless parent_node.children[word[-1]].children.empty? && !node.word?
-    parent_node.children.clear
-    prune(parent_node, word[0..-2])
+    child_node = parent_node.children[word[-1]]
+    return if !child_node.children.empty? || child_node.word?
+    parent_node.children.delete(word[-1])
+    prune(word[0..-2], node)
   end
 end
