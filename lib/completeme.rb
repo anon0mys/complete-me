@@ -67,7 +67,7 @@ class CompleteMe
       suggestion_sorter(suggestion_array.uniq, prefix)
     end
   end
-  
+
   def suggestion_sorter(suggestion, prefix)
     weights = suggestion.map do |item|
       find_node(item).weight_holder[prefix] || 0

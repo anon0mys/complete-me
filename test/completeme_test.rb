@@ -106,16 +106,16 @@ class CompleteMeTest < MiniTest::Test
 
   def test_select_method
     completion = CompleteMe.new
-    %w[pize pizza pizzeria pizzicato pizzle].each do |word|
+    %w[pize pizza pizzeria pizzicato].each do |word|
       completion.insert(word)
     end
 
-    3.times{completion.select('piz', 'pizzeria')}
-    2.times{completion.select('pi', 'pizza')}
-    completion.select("pi", "pizzicato")
+    3.times{ completion.select('piz', 'pizzeria') }
+    2.times{ completion.select('pi', 'pizza') }
+    completion.select('pi', "pizzicato")
 
-    assert_equal %w[pizzeria pize pizza pizzicato pizzle], completion.suggest('piz')
-    assert_equal %w[pizza pizzicato pize pizzeria pizzle], completion.suggest('pi')
+    assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
+    assert_equal %w[pizza pizzicato pize pizzeria], completion.suggest('pi')
   end
 
   def test_removal_of_word_flag
