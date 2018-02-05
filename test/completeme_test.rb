@@ -1,5 +1,5 @@
 require_relative 'test_helper'
-require './lib/completeme'
+require './lib/complete_me'
 
 class CompleteMeTest < MiniTest::Test
   def test_completion_tree_exists
@@ -93,7 +93,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -153,8 +152,8 @@ class CompleteMeTest < MiniTest::Test
     end
     completion.delete('pickle')
 
-    assert_equal 'Node does not exist.', completion.find_node('pickle')
-    assert_equal 'Node does not exist.', completion.find_node('pickl')
+    assert_equal 'Node does not exist.', completion.delete('pickle')
+    assert_equal 'Node does not exist.', completion.delete('pickl')
     assert_equal 'k', completion.find_node('pick').letter
     assert completion.find_node('pick').word?
   end
