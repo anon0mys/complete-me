@@ -93,6 +93,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
+    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
