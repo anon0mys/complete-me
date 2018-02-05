@@ -51,6 +51,18 @@ class CompleteMeTest < MiniTest::Test
     completion.insert('pize')
 
     assert completion.find_node('pize').word?
+    refute completion.find_node('piz').word?
+  end
+
+  def test_can_insert_word_flag_on_existing_word
+    completion = CompleteMe.new
+    completion.insert('pickle')
+
+    refute completion.find_node('pick').word?
+
+    completion.insert('pick')
+
+    assert completion.find_node('pick').word?
   end
 
   def test_can_count_one_word
