@@ -83,9 +83,9 @@ class CompleteMe
     weights = suggestion.map do |item|
       find_node(item).weight_holder[prefix] || 0
     end
-    
+
     sorted = suggestion.zip(weights).to_h
-    sorted = c.sort_by{|k, v| -v}.flatten!
+    sorted = sorted.sort_by{|k, v| -v}.flatten!
     sorted.select{|x| x.is_a?(String)}
   end
 end
