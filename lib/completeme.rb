@@ -9,7 +9,7 @@ class CompleteMe
 
   def insert(word, node = @head)
     length = word.chars.length
-    letter = word.chars.first
+    letter = word.downcase.chars.first
     unless node.children[letter]
       node.children[letter] = create_node(letter, length)
     end
