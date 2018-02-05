@@ -105,7 +105,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_select_method
-    skip
     completion = CompleteMe.new
     completion.insert('tragic')
     completion.insert('tragicly')
