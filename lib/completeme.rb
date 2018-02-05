@@ -67,6 +67,16 @@ class CompleteMe
       suggestion_sorter(suggestion_array.uniq, prefix)
     end
   end
+  
+  def suggestion_sorter(suggestion, prefix)
+    weights = suggestion.map do |item|
+      find_node(item).weight_holder[prefix] || 0
+    end
+
+    sorted = suggestion.zip(weights).to_h
+    sorted = sorted.sort_by { |_k, v| -v }.flatten!
+    sorted.select { |item| item.is_a?(String) }
+  end
 
   def select(prefix, desired)
     return 'Invalid combination.' if find_node(desired).is_a?(String)
@@ -76,16 +86,6 @@ class CompleteMe
     else
       word.weight_holder[prefix] += 1
     end
-  end
-
-  def suggestion_sorter(suggestion, prefix)
-    weights = suggestion.map do |item|
-      find_node(item).weight_holder[prefix] || 0
-    end
-
-    sorted = suggestion.zip(weights).to_h
-    sorted = sorted.sort_by { |_k, v| -v }.flatten!
-    sorted.select { |item| item.is_a?(String) }
   end
 
   def delete(word)
