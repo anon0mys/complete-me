@@ -88,4 +88,21 @@ class CompleteMe
     sorted = sorted.sort_by{|k, v| -v}.flatten!
     sorted.select{|x| x.is_a?(String)}
   end
+
+  def delete(word)
+    node = find_node(word)
+    if node.class == String
+      node
+    else
+      node.word = false
+      prune(node, word)
+    end
+  end
+
+  def prune(node, word)
+    parent_node = find_node(word[0..-2])
+    return unless parent_node.children[word[-1]].children.empty? && !node.word?
+    parent_node.children.clear
+    prune(parent_node, word[0..-2])
+  end
 end

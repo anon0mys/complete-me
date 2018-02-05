@@ -105,6 +105,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_select_method
+    skip
     completion = CompleteMe.new
     completion.insert('tragic')
     completion.insert('tragicly')
@@ -117,7 +118,7 @@ class CompleteMeTest < MiniTest::Test
     assert_equal %w[tragicly tragic travesty], completion.suggest('trag')
   end
 
-  def test_deletion
+  def test_removal_of_word_flag
     completion = CompleteMe.new
     %w[pie pizza pizzeria pick pickle].each do |word|
       completion.insert(word)
@@ -130,5 +131,18 @@ class CompleteMeTest < MiniTest::Test
 
     assert_equal 4, completion.count
     refute completion.find_node('pick').word?
+  end
+
+  def test_pruning_of_tree_after_deletion
+    completion = CompleteMe.new
+    %w[pie pizza pizzeria pick pickle].each do |word|
+      completion.insert(word)
+    end
+    completion.delete('pickle')
+
+    assert_equal 'Node does not exist.', completion.find_node('pickle')
+    assert_equal 'Node does not exist.', completion.find_node('pickl')
+    assert_equal 'k', completion.find_node('pick').letter
+    assert completion.find_node('pick').word?
   end
 end
