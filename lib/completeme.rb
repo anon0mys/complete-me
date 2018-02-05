@@ -8,13 +8,17 @@ class CompleteMe
   end
 
   def insert(word, node = @head)
-    length = word.chars.length
-    letter = word.chars.first
-    unless node.children[letter]
-      node.children[letter] = create_node(letter, length)
+    if find_node(word) == 'Node does not exist.'
+      length = word.chars.length
+      letter = word.chars.first
+      unless node.children[letter]
+        node.children[letter] = create_node(letter, length)
+      end
+      return nil if length == 1
+      insert(word[1..-1], node.children[letter])
+    else
+      find_node(word).word = true
     end
-    return nil if length == 1
-    insert(word[1..-1], node.children[letter])
   end
 
   def create_node(letter, length)
