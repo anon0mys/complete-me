@@ -76,15 +76,13 @@ class CompleteMe
     end
   end
 
-  def suggest_substring(substring, prefix = "", node = @head, matches = [])
-    unless node.nil?
+  def suggest_substring(substring, prefix = '', node = @head, matches = [])
+    unless node&.nil?
       node.children.each do |key, value|
         if find_node(prefix + substring).is_a?(Node)
           matches << suggest(prefix + substring)
-          suggest_substring(substring, prefix + key, value, matches)
-        else
-          suggest_substring(substring, prefix + key, value, matches)
         end
+        suggest_substring(substring, prefix + key, value, matches)
       end
     end
     matches.flatten.uniq
@@ -128,8 +126,3 @@ class CompleteMe
     prune(word[0..-2], node)
   end
 end
-
-completion = CompleteMe.new
-dictionary = File.read('/usr/share/dict/words')
-completion.populate(dictionary)
-binding.pry

@@ -93,7 +93,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -123,9 +122,9 @@ class CompleteMeTest < MiniTest::Test
       completion.insert(word)
     end
 
-    3.times{ completion.select('piz', 'pizzeria') }
-    2.times{ completion.select('pi', 'pizza') }
-    completion.select('pi', "pizzicato")
+    3.times { completion.select('piz', 'pizzeria') }
+    2.times { completion.select('pi', 'pizza') }
+    completion.select('pi', 'pizzicato')
 
     assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
     assert_equal %w[pizza pizzicato pize pizzeria], completion.suggest('pi')
@@ -161,13 +160,13 @@ class CompleteMeTest < MiniTest::Test
 
   def test_searching_for_words_via_substring
     completion = CompleteMe.new
-    %w[complete completion incomplete intercom intercommunion].each do |word|
+    all_words = %w[complete completion incomplete intercom intercommunion]
+    all_words.each do |word|
       completion.insert(word)
     end
 
-    assert_equal completion.suggest_substring('com'), %w[complete completion incomplete
-                                                         intercom intercommunion]
-    assert_equal completion.suggest_substring('ple'), %w[complete completion incomplete]
-    assert_equal completion.suggest_substring('nte'), %w[intercom intercommunion]
+    assert_equal completion.suggest_substring('com'), all_words
+    assert_equal completion.suggest_substring('ple'), all_words[0..2]
+    assert_equal completion.suggest_substring('nte'), all_words[3..4]
   end
 end
