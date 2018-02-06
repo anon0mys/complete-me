@@ -1,4 +1,3 @@
-#This is a test class
 require_relative 'test_helper'
 require './lib/complete_me'
 
