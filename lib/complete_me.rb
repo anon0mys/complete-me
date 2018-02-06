@@ -8,7 +8,7 @@ class CompleteMe
   end
 
   def insert(word)
-    if find_node(word) == 'Node does not exist.'
+    if find_node(word).is_a?(String)
       build_branch(word)
     else
       find_node(word).word = true
@@ -47,31 +47,25 @@ class CompleteMe
 
   def populate(dictionary)
     dictionary = dictionary.split("\n")
-    dictionary.each do |word|
-      insert(word.strip)
-    end
+    dictionary.each { |word| insert(word.strip) }
   end
 
   def count(starting_point = @head, total_words = [])
-    total_words.push(1) if starting_point.word?
-    unless starting_point.children.keys[0].nil?
+    total_words << 1 if starting_point.word?
+    unless starting_point.children.empty?
       starting_point.children.each_value do |child|
         count(child, total_words)
       end
     end
-    total_words.count
+    total_words.length
   end
 
   def suggest(word)
     nodes = case_desensitizer(word)
-    if nodes.empty?
-      []
-    else
-      suggestions = nodes.map do |prefix, node|
-        suffix_builder(prefix, node)
-      end.flatten
-      suggestion_sorter(suggestions, word)
-    end
+    return [] if nodes.empty?
+    suggestions = nodes.map { |prefix, node| suffix_builder(prefix, node) }
+    suggestions.flatten!
+    suggestion_sorter(suggestions, word)
   end
 
   def case_desensitizer(word)
@@ -87,7 +81,7 @@ class CompleteMe
   end
 
   def suffix_builder(word, node, suggestion_array = [])
-    suggestion_array.push word if node.word?
+    suggestion_array << word if node.word?
     node.children.each do |letter, child|
       suffix_builder(word + letter, child, suggestion_array)
     end
@@ -95,7 +89,7 @@ class CompleteMe
   end
 
   def suggest_substring(substring, prefix = '', node = @head, matches = [])
-    unless node&.nil?
+    unless node.nil?
       node.children.each do |key, value|
         match = find_node(prefix + substring)
         matches << suggest(prefix + substring) if match.is_a?(Node)
@@ -118,16 +112,13 @@ class CompleteMe
   def select(prefix, desired)
     return 'Invalid combination.' if find_node(desired).is_a?(String)
     word = find_node(desired)
-    if word.weight_holder[prefix].nil?
-      word.weight_holder[prefix] = 1
-    else
-      word.weight_holder[prefix] += 1
-    end
+    word.weight_holder[prefix] = 0 if word.weight_holder[prefix].nil?
+    word.weight_holder[prefix] += 1
   end
 
   def delete(word)
     node = find_node(word)
-    if node.class == String
+    if node.is_a?(String)
       node
     else
       node.word = false
