@@ -93,6 +93,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
+    # skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -114,6 +115,15 @@ class CompleteMeTest < MiniTest::Test
     assert_equal %w[the there], completion.suggest('th')
     assert_equal %w[barnacle], completion.suggest('barn')
     assert_equal [], completion.suggest('taxes')
+  end
+
+  def test_suggest_includes_capitals
+    completion = CompleteMe.new
+    completion.insert('apple')
+    completion.insert('America')
+
+    assert_equal %w[apple America], completion.suggest('a')
+    assert_equal %w[apple America], completion.suggest('A')
   end
 
   def test_select_method
