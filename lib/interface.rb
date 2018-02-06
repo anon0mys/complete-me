@@ -67,5 +67,18 @@ Shoes.app do
     end
 
     @deleted = para ''
+    para 'Search substrings'
+
+    flow do
+      @substring = edit_line
+      @substring_button = button 'Enter'
+      @substring_button.click do
+
+        temp = engine.suggest_substring(@substring.text).join(', ')
+        @sub_feed_back.replace(temp)
+      end
+    end
+
+      @sub_feed_back = para ''
   end
 end
