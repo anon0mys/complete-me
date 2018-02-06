@@ -1,7 +1,7 @@
 require './complete_me'
 engine = CompleteMe.new
 Shoes.app do
-  stack(margin: 20) do 
+  stack(margin: 20) do
     para 'Enter a Substring'
     flow do
       @search_input = edit_line
@@ -12,7 +12,7 @@ Shoes.app do
     end
 
     @results = para ''
-    para "Import a Text File"
+    para 'Import a Text File'
 
     flow do
       @file_path = edit_line('/usr/share/dict/words')
