@@ -8,10 +8,10 @@ class CompleteMe
   end
 
   def insert(word)
-    if find_node(word) == 'Node does not exist.'
-      build_branch(word)
-    else
+    if find_node(word).is_a?(Node)
       find_node(word).word = true
+    else
+      build_branch(word)
     end
   end
 
@@ -76,11 +76,11 @@ class CompleteMe
 
   def case_desensitizer(word)
     nodes = {}
-    unless find_node(word.downcase).is_a?(String)
+    if find_node(word.downcase).is_a?(Node)
       nodes[word.downcase] = find_node(word.downcase)
     end
     proper_word = word[0].upcase + word[1..-1]
-    unless find_node(proper_word).is_a?(String)
+    if find_node(proper_word).is_a?(Node)
       nodes[proper_word] = find_node(proper_word)
     end
     nodes
