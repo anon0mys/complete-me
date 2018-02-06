@@ -134,7 +134,7 @@ class CompleteMeTest < MiniTest::Test
 
     3.times{ completion.select('piz', 'pizzeria') }
     2.times{ completion.select('pi', 'pizza') }
-    completion.select('pi', "pizzicato")
+    completion.select('pi', 'pizzicato')
 
     assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
     assert_equal %w[pizza pizzicato pize pizzeria], completion.suggest('pi')
@@ -166,5 +166,17 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'Node does not exist.', completion.delete('pickl')
     assert_equal 'k', completion.find_node('pick').letter
     assert completion.find_node('pick').word?
+  end
+
+  def test_can_insert_and_find_addresses
+    completion = CompleteMe.new
+    addresses = File.read('./addresses.txt')
+
+    completion.populate(addresses)
+
+    assert_equal ['5135 N Peoria St', '5135 N Perth Ct', '5135 N Perry St'],
+                 completion.suggest('5135 N Pe')
+    assert_equal [], completion.suggest('1122821 Imaginary Dr')
+    assert_equal 8, completion.suggest('9999').size
   end
 end
