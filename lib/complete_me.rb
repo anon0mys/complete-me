@@ -34,7 +34,6 @@ class CompleteMe
   end
 
   def find_node(word, ptr = head)
-    # ptr = head
     word.chars.each do |char|
       ptr = ptr.children[char] unless ptr.nil?
     end

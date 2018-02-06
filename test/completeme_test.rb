@@ -93,7 +93,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    skip
+    # skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -169,5 +169,17 @@ class CompleteMeTest < MiniTest::Test
     assert_equal completion.suggest_substring('com'), all_words
     assert_equal completion.suggest_substring('ple'), all_words[0..2]
     assert_equal completion.suggest_substring('nte'), all_words[3..4]
+  end
+
+  def test_can_insert_and_find_addresses
+    completion = CompleteMe.new
+    addresses = File.read('./addresses.txt')
+
+    completion.populate(addresses)
+
+    assert_equal ['5135 N Peoria St', '5135 N Perth Ct', '5135 N Perry St'],
+                 completion.suggest('5135 N Pe')
+    assert_equal [], completion.suggest('1122821 Imaginary Dr')
+    assert_equal 8, completion.suggest('9999').size
   end
 end
