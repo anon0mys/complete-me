@@ -10,48 +10,44 @@ Shoes.app do
       @search_input = edit_line
       @search_button = button "Enter"
       @search_button.click{
-        
-        @results.replace(engine.suggest(@search_input.text()).join ', ')
-
+      @results.replace(engine.suggest(@search_input.text).join ', ')
     }
     end
 
-    @results = para ''
+  @results = para ''
 
-    para "Import a Text File"
+  para "Import a Text File"
 
     flow do
       @file_path = edit_line('/usr/share/dict/words')
       @import = button 'Import'
       @import.click{
       
-        dictionary = File.read(@file_path.text())
+        dictionary = File.read(@file_path.text)
 
         engine.populate(dictionary)
         @feedback.replace('Imported')
-
       }
     end
 
-    @feedback = para ''
+  @feedback = para ''
 
-    para 'Insert Word'
+  para 'Insert Word'
 
     flow do
       @insert_word = edit_line
       @insert_button = button 'Insert'
       @insert_button.click{
         
-        word = @insert_word.text()
+        word = @insert_word.text
         engine.insert(word)
         @inserted.replace "#{word} inserted."
-
       }
     end
 
-    @inserted = para ''
+  @inserted = para ''
 
-    para 'Select Words'
+  para 'Select Words'
 
     flow do
       @selection_one = edit_line('select prefix')
@@ -59,16 +55,14 @@ Shoes.app do
       @selection_button = button 'Select Word'
       @selection_button.click{
 
-        s_one = @selection_one.text()
-        s_two = @selection_two.text()
+        s_one = @selection_one.text
+        s_two = @selection_two.text
         engine.select(s_one, s_two)
         @select.replace("#{s_one}: #{engine.find_node(s_two).weight_holder}")
-
       }
     end
 
-    @select = para ''
-
+  @select = para ''
 
   para 'Delete a Word'
 
@@ -77,14 +71,12 @@ Shoes.app do
       @delete_button = button 'Delete'
       @delete_button.click{
 
-        remove = @deletion.text()
+        remove = @deletion.text
         engine.delete(remove)
-        @deleted.replace(@deletion.text() + ' has been removed.')
-
+        @deleted.replace(@deletion.text + ' has been removed.')
       }
     end
 
     @deleted = para ''
-
   end
 end
