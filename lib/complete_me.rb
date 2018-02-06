@@ -76,20 +76,21 @@ class CompleteMe
     end
   end
 
-  def suggest_substring(substring = nil, starting_point = @head, matches = [], prefix = "")
-    starting_point.children.each do |key, value|
+  def suggest_substring(substring = nil, parent_node = nil, node = @head, matches = [], prefix = "")
+    node.children.each do |key, value|
       if key == substring[0]
-        matches << investigate_potential_substring(substring, starting_point, prefix)
+        matches << investigate_potential_substring(substring, node, prefix)
       else
+        prefix.chop! if find_node(prefix) == node.children[prefix[-1]]
         prefix += key
-        suggest_substring(substring, value, matches)
+        suggest_substring(substring, node, value, matches, prefix)
       end
     end
     matches.flatten
   end
 
-  def investigate_potential_substring(substring, starting_point, prefix)
-    suggest(prefix + substring) unless find_node(substring, starting_point) == 'Node does not exist.'
+  def investigate_potential_substring(substring, node, prefix)
+    suggest(prefix + substring) unless find_node(substring, node) == 'Node does not exist.'
   end
 
   def suggestion_sorter(suggestion, prefix)
