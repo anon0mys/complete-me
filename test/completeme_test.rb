@@ -165,8 +165,8 @@ class CompleteMeTest < MiniTest::Test
       completion.insert(word)
     end
 
-    # assert_equal completion.suggest_substring('com'), %w[complete completion incomplete
-                                                         # intercom intercommunion]
+    assert_equal completion.suggest_substring('com'), %w[complete completion incomplete
+                                                         intercom intercommunion]
     assert_equal completion.suggest_substring('ple'), %w[complete completion incomplete]
     assert_equal completion.suggest_substring('nte'), %w[intercom intercommunion]
   end

@@ -76,21 +76,18 @@ class CompleteMe
     end
   end
 
-  def suggest_substring(substring = nil, parent_node = nil, node = @head, matches = [], prefix = "")
-    node.children.each do |key, value|
-      if key == substring[0]
-        matches << investigate_potential_substring(substring, node, prefix)
-      else
-        prefix.chop! if find_node(prefix) == node.children[prefix[-1]]
-        prefix += key
-        suggest_substring(substring, node, value, matches, prefix)
+  def suggest_substring(substring, prefix = "", node = @head, matches = [])
+    unless node.nil?
+      node.children.each do |key, value|
+        if find_node(prefix + substring).is_a?(Node)
+          matches << suggest(prefix + substring)
+          suggest_substring(substring, prefix + key, value, matches)
+        else
+          suggest_substring(substring, prefix + key, value, matches)
+        end
       end
     end
-    matches.flatten
-  end
-
-  def investigate_potential_substring(substring, node, prefix)
-    suggest(prefix + substring) unless find_node(substring, node) == 'Node does not exist.'
+    matches.flatten.uniq
   end
 
   def suggestion_sorter(suggestion, prefix)
@@ -133,7 +130,6 @@ class CompleteMe
 end
 
 completion = CompleteMe.new
-%w[complete completion incomplete intercom intercommunion pizza].each do |word|
-  completion.insert(word)
-end
+dictionary = File.read('/usr/share/dict/words')
+completion.populate(dictionary)
 binding.pry
