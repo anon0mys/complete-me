@@ -33,8 +33,8 @@ class CompleteMe
     end
   end
 
-  def find_node(word)
-    ptr = head
+  def find_node(word, ptr = head)
+    # ptr = head
     word.chars.each do |char|
       ptr = ptr.children[char] unless ptr.nil?
     end
@@ -93,6 +93,18 @@ class CompleteMe
       suffix_builder(word + letter, child, suggestion_array)
     end
     suggestion_array
+  end
+
+  def suggest_substring(substring, prefix = '', node = @head, matches = [])
+    unless node&.nil?
+      node.children.each do |key, value|
+        if find_node(prefix + substring).is_a?(Node)
+          matches << suggest(prefix + substring)
+        end
+        suggest_substring(substring, prefix + key, value, matches)
+      end
+    end
+    matches.flatten.uniq
   end
 
   def suggestion_sorter(suggestion, prefix)

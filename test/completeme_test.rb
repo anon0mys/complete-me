@@ -93,7 +93,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    # skip
+    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -105,7 +105,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_suggest_method
-    # skip
     completion = CompleteMe.new
     completion.insert('the')
     completion.insert('there')
@@ -118,25 +117,14 @@ class CompleteMeTest < MiniTest::Test
     assert_equal [], completion.suggest('taxes')
   end
 
-  def test_suggest_includes_capitals
-    # skip
-    completion = CompleteMe.new
-    completion.insert('apple')
-    completion.insert('America')
-
-    assert_equal %w[apple America], completion.suggest('a')
-    assert_equal %w[apple America], completion.suggest('A')
-  end
-
   def test_select_method
-    # skip
     completion = CompleteMe.new
     %w[pize pizza pizzeria pizzicato].each do |word|
       completion.insert(word)
     end
 
-    3.times{ completion.select('piz', 'pizzeria') }
-    2.times{ completion.select('pi', 'pizza') }
+    3.times { completion.select('piz', 'pizzeria') }
+    2.times { completion.select('pi', 'pizza') }
     completion.select('pi', 'pizzicato')
 
     assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
@@ -171,15 +159,15 @@ class CompleteMeTest < MiniTest::Test
     assert completion.find_node('pick').word?
   end
 
-  def test_can_insert_and_find_addresses
+  def test_searching_for_words_via_substring
     completion = CompleteMe.new
-    addresses = File.read('./addresses.txt')
+    all_words = %w[complete completion incomplete intercom intercommunion]
+    all_words.each do |word|
+      completion.insert(word)
+    end
 
-    completion.populate(addresses)
-
-    assert_equal ['5135 N Peoria St', '5135 N Perth Ct', '5135 N Perry St'],
-                 completion.suggest('5135 N Pe')
-    assert_equal [], completion.suggest('1122821 Imaginary Dr')
-    assert_equal 8, completion.suggest('9999').size
+    assert_equal completion.suggest_substring('com'), all_words
+    assert_equal completion.suggest_substring('ple'), all_words[0..2]
+    assert_equal completion.suggest_substring('nte'), all_words[3..4]
   end
 end
