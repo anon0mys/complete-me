@@ -33,8 +33,8 @@ class CompleteMe
     end
   end
 
-  def find_node(word)
-    ptr = head
+  def find_node(word, ptr = head)
+    # ptr = head
     word.chars.each do |char|
       ptr = ptr.children[char] unless ptr.nil?
     end
@@ -76,6 +76,22 @@ class CompleteMe
     end
   end
 
+  def suggest_substring(substring = nil, starting_point = @head, matches = [], prefix = "")
+    starting_point.children.each do |key, value|
+      if key == substring[0]
+        matches << investigate_potential_substring(substring, starting_point, prefix)
+      else
+        prefix += key
+        suggest_substring(substring, value, matches)
+      end
+    end
+    matches.flatten
+  end
+
+  def investigate_potential_substring(substring, starting_point, prefix)
+    suggest(prefix + substring) unless find_node(substring, starting_point) == 'Node does not exist.'
+  end
+
   def suggestion_sorter(suggestion, prefix)
     weights = suggestion.map do |item|
       find_node(item).weight_holder[prefix] || 0
@@ -114,3 +130,9 @@ class CompleteMe
     prune(word[0..-2], node)
   end
 end
+
+completion = CompleteMe.new
+%w[complete completion incomplete intercom intercommunion pizza].each do |word|
+  completion.insert(word)
+end
+binding.pry

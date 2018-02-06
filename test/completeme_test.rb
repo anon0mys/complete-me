@@ -93,6 +93,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
+    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -156,5 +157,17 @@ class CompleteMeTest < MiniTest::Test
     assert_equal 'Node does not exist.', completion.delete('pickl')
     assert_equal 'k', completion.find_node('pick').letter
     assert completion.find_node('pick').word?
+  end
+
+  def test_searching_for_words_via_substring
+    completion = CompleteMe.new
+    %w[complete completion incomplete intercom intercommunion].each do |word|
+      completion.insert(word)
+    end
+
+    # assert_equal completion.suggest_substring('com'), %w[complete completion incomplete
+                                                         # intercom intercommunion]
+    assert_equal completion.suggest_substring('ple'), %w[complete completion incomplete]
+    assert_equal completion.suggest_substring('nte'), %w[intercom intercommunion]
   end
 end
