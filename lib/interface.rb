@@ -77,6 +77,6 @@ Shoes.app do
         @sub_feed_back.replace(temp)
       end
     end
-      @sub_feed_back = para ''
+    @sub_feed_back = para ''
   end
 end
