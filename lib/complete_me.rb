@@ -97,9 +97,8 @@ class CompleteMe
   def suggest_substring(substring, prefix = '', node = @head, matches = [])
     unless node&.nil?
       node.children.each do |key, value|
-        if find_node(prefix + substring).is_a?(Node)
-          matches << suggest(prefix + substring)
-        end
+        match = find_node(prefix + substring)
+        matches << suggest(prefix + substring) if match.is_a?(Node)
         suggest_substring(substring, prefix + key, value, matches)
       end
     end
