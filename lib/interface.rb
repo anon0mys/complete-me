@@ -1,4 +1,5 @@
-require './complete_me'
+
+require_relative 'complete_me'
 engine = CompleteMe.new
 Shoes.app do
   stack(margin: 20) do

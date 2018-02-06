@@ -1,6 +1,6 @@
 # This is a CompleteMe class
 require_relative 'node'
-require 'pry'
+
 class CompleteMe
   attr_reader :head
   def initialize
@@ -80,8 +80,9 @@ class CompleteMe
     unless find_node(word.downcase).is_a?(String)
       nodes[word.downcase] = find_node(word.downcase)
     end
-    unless find_node(word.capitalize).is_a?(String)
-      nodes[word.capitalize] = find_node(word.capitalize)
+    proper_word = word[0].upcase + word[1..-1]
+    unless find_node(proper_word).is_a?(String)
+      nodes[proper_word] = find_node(proper_word)
     end
     nodes
   end

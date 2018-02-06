@@ -105,6 +105,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_suggest_method
+    # skip
     completion = CompleteMe.new
     completion.insert('the')
     completion.insert('there')
@@ -118,6 +119,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_suggest_includes_capitals
+    # skip
     completion = CompleteMe.new
     completion.insert('apple')
     completion.insert('America')
@@ -127,6 +129,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_select_method
+    # skip
     completion = CompleteMe.new
     %w[pize pizza pizzeria pizzicato].each do |word|
       completion.insert(word)
