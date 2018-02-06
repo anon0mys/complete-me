@@ -1,6 +1,6 @@
 # This is a CompleteMe class
 require_relative 'node'
-require 'pry'
+
 class CompleteMe
   attr_reader :head
   def initialize
@@ -63,17 +63,36 @@ class CompleteMe
     total_words.count
   end
 
-  def suggest(word, prefix = word, suggestion_array = [])
-    node = find_node(word)
-    if node == 'Node does not exist.'
+  def suggest(word)
+    nodes = case_desensitizer(word)
+    if nodes.empty?
       []
     else
-      suggestion_array.push word if node.word?
-      node.children.each_key do |letter|
-        suggest(word + letter, prefix, suggestion_array)
-      end
-      suggestion_sorter(suggestion_array.uniq, prefix)
+      suggestions = nodes.map do |prefix, node|
+        suffix_builder(prefix, node)
+      end.flatten
+      suggestion_sorter(suggestions, word)
     end
+  end
+
+  def case_desensitizer(word)
+    nodes = {}
+    unless find_node(word.downcase).is_a?(String)
+      nodes[word.downcase] = find_node(word.downcase)
+    end
+    proper_word = word[0].upcase + word[1..-1]
+    unless find_node(proper_word).is_a?(String)
+      nodes[proper_word] = find_node(proper_word)
+    end
+    nodes
+  end
+
+  def suffix_builder(word, node, suggestion_array = [])
+    suggestion_array.push word if node.word?
+    node.children.each do |letter, child|
+      suffix_builder(word + letter, child, suggestion_array)
+    end
+    suggestion_array
   end
 
   def suggest_substring(substring, prefix = "", node = @head, matches = [])

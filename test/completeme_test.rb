@@ -93,7 +93,6 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_populate_method
-    skip
     completion = CompleteMe.new
     dictionary = File.read('/usr/share/dict/words')
     completion.populate(dictionary)
@@ -105,6 +104,7 @@ class CompleteMeTest < MiniTest::Test
   end
 
   def test_suggest_method
+    # skip
     completion = CompleteMe.new
     completion.insert('the')
     completion.insert('there')
@@ -117,7 +117,18 @@ class CompleteMeTest < MiniTest::Test
     assert_equal [], completion.suggest('taxes')
   end
 
+  def test_suggest_includes_capitals
+    # skip
+    completion = CompleteMe.new
+    completion.insert('apple')
+    completion.insert('America')
+
+    assert_equal %w[apple America], completion.suggest('a')
+    assert_equal %w[apple America], completion.suggest('A')
+  end
+
   def test_select_method
+    # skip
     completion = CompleteMe.new
     %w[pize pizza pizzeria pizzicato].each do |word|
       completion.insert(word)
@@ -125,7 +136,7 @@ class CompleteMeTest < MiniTest::Test
 
     3.times{ completion.select('piz', 'pizzeria') }
     2.times{ completion.select('pi', 'pizza') }
-    completion.select('pi', "pizzicato")
+    completion.select('pi', 'pizzicato')
 
     assert_equal %w[pizzeria pize pizza pizzicato], completion.suggest('piz')
     assert_equal %w[pizza pizzicato pize pizzeria], completion.suggest('pi')
@@ -169,5 +180,17 @@ class CompleteMeTest < MiniTest::Test
                                                          intercom intercommunion]
     assert_equal completion.suggest_substring('ple'), %w[complete completion incomplete]
     assert_equal completion.suggest_substring('nte'), %w[intercom intercommunion]
+  end
+  
+  def test_can_insert_and_find_addresses
+    completion = CompleteMe.new
+    addresses = File.read('./addresses.txt')
+
+    completion.populate(addresses)
+
+    assert_equal ['5135 N Peoria St', '5135 N Perth Ct', '5135 N Perry St'],
+                 completion.suggest('5135 N Pe')
+    assert_equal [], completion.suggest('1122821 Imaginary Dr')
+    assert_equal 8, completion.suggest('9999').size
   end
 end
