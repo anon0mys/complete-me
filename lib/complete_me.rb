@@ -1,6 +1,6 @@
-# This is a CompleteMe class
 require_relative 'node'
 
+# This is a CompleteMe class
 class CompleteMe
   attr_reader :head
   def initialize
@@ -26,11 +26,7 @@ class CompleteMe
   end
 
   def create_node(letter, length)
-    if length == 1
-      Node.new(letter, true)
-    else
-      Node.new(letter)
-    end
+    Node.new(letter, length == 1)
   end
 
   def find_node(word, ptr = head)
